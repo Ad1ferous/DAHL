@@ -7,10 +7,10 @@
 ## Быстрый старт
 
 ### 1. Клонирование репозитория
-bash
+'''bash
 git clone https://github.com/Ad1ferous/DAHL.git
 cd DAHL
-
+'''
 ### 2. Запуск бэкенда (Python + FastAPI)
 bash
 cd backend
