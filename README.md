@@ -7,18 +7,21 @@
 ## Быстрый старт
 
 ### 1. Клонирование репозитория
-``` bash
+``` 
+bash
 git clone https://github.com/Ad1ferous/DAHL.git
-cd DAHL ```
+cd DAHL
+```
 
 ### 2. Запуск бэкенда (Python + FastAPI)
-``` bash
+``` 
+bash
 cd backend
 python -m venv venv
 venv\Scripts\activate      # Windows
 pip install -r requirements.txt
-uvicorn main:app --reload --port 8002 ```
-
+uvicorn main:app --reload --port 8002 
+```
 Сервер будет доступен по адресу http://localhost:8002.
 
 ### 3. Запуск фронтенда (React + Vite)
