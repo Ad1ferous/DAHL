@@ -9,7 +9,7 @@
 ## Быстрый старт
 
 ### 1. Клонировать репозиторий
-```bash
+bash
 git clone https://github.com/AlexTilta/DAHL.git
 cd DAHL
 
