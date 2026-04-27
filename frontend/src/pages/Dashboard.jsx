@@ -1,15 +1,15 @@
 import { useEffect, useState } from 'react'
 import { useNavigate, Link } from 'react-router-dom'
-import axios from 'axios'   // ← добавьте этот импорт, если ещё нет
+import axios from 'axios'
 
 function Dashboard() {
   const navigate = useNavigate()
   const [user, setUser] = useState(null)
-  const [readyRoutes, setReadyRoutes] = useState([])   // ← состояние для готовых маршрутов
+  const [readyRoutes, setReadyRoutes] = useState([])
+  const token = localStorage.getItem('token')
 
   // Проверка авторизации
   useEffect(() => {
-    const token = localStorage.getItem('token')
     if (!token) {
       navigate('/login')
       return
@@ -18,7 +18,7 @@ function Dashboard() {
     if (storedUser) {
       setUser(JSON.parse(storedUser))
     }
-  }, [navigate])
+  }, [token, navigate])
 
   // Загрузка готовых маршрутов с бэкенда
   useEffect(() => {
@@ -36,13 +36,12 @@ function Dashboard() {
   if (!user) return <div>Загрузка...</div>
 
   return (
-    <div>
+    <div className="page-container" style={{ maxWidth: '600px' }}>
       <h1>Добро пожаловать, {user.username}!</h1>
       <p>Это ваш личный кабинет.</p>
       
-      {/* Кнопка для создания нового плана */}
       <Link to="/new-plan">
-        <button style={{ padding: '10px 20px', fontSize: '16px' }}>
+        <button className="btn btn-primary" style={{ marginBottom: '20px' }}>
           ✈️ Создать новый план
         </button>
       </Link>
@@ -55,16 +54,14 @@ function Dashboard() {
       {readyRoutes.map(route => (
         <div key={route.id} style={{ margin: '10px 0', padding: '10px', border: '1px solid #ccc' }}>
           <h3>{route.name}</h3>
-          <button onClick={() => {
-            // создать план на основе этого маршрута
+          <button className="btn btn-primary" onClick={() => {
             axios.post('http://localhost:8002/plans', { name: route.name }, {
-              headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }
+              headers: { Authorization: `Bearer ${token}` }
             }).then(res => {
               const planId = res.data.plan_id
-              // добавить все места
-              const promises = route.places.map(p => 
+              const promises = route.places.map(p =>
                 axios.post(`http://localhost:8002/plans/${planId}/places`, p, {
-                  headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }
+                  headers: { Authorization: `Bearer ${token}` }
                 })
               )
               Promise.all(promises).then(() => {
@@ -79,7 +76,7 @@ function Dashboard() {
       ))}
 
       <hr />
-      <button onClick={handleLogout}>Выйти</button>
+      <button className="btn btn-primary" onClick={handleLogout}>Выйти</button>
     </div>
   )
 }
