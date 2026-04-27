@@ -93,7 +93,7 @@ function PlanPage() {
       <h2>{planName}</h2>
       <div style={{display: 'flex'}}>
         <div style={{width: '70%'}}>
-          <YMaps query={{ apikey: '8240c0ae-a29d-4c72-b396-fd7631b79bc7' }}>
+          <YMaps query={{ apikey: import.meta.env.VITE_YANDEX_MAPS_API_KEY }}>
             <Map
               state={mapState}
               width="100%"
