@@ -1,10 +1,11 @@
-import { useState } from 'react'
-import { Link } from 'react-router-dom'
+import { useState, useEffect } from 'react'
+import axios from 'axios'
 
-function Dashboard() {
+function ProfilePage() {
+  const token = localStorage.getItem('token')
   const [activeTab, setActiveTab] = useState('routes') // 'routes', 'reviews', 'subscriptions'
 
-  // Пример данных (позже можно заменить на загрузку с бэкенда)
+  // В реальном проекте эти данные можно загрузить с бэкенда
   const user = {
     name: 'Иван Крузенштерн',
     location: 'Москва',
@@ -23,7 +24,7 @@ function Dashboard() {
         dates: '12-19 августа',
         people: 2,
         budget: '45 000 ₽',
-        status: 'finished',
+        status: 'finished', // 'finished' | 'draft'
         coverColor: '#E0E7FF'
       },
       {
@@ -46,7 +47,7 @@ function Dashboard() {
         <div className="header-logo">ДАЛЬ</div>
         <nav className="header-nav">
           <a href="/" className="header-link">Главная</a>
-          <a href="/dashboard" className="header-link active">Профиль</a>
+          <a href="/profile" className="header-link active">Профиль</a>
         </nav>
       </header>
 
@@ -79,28 +80,6 @@ function Dashboard() {
         </div>
       </section>
 
-      {/* Кнопка "Создать новый план" */}
-      <div style={{ margin: '20px 60px', textAlign: 'right' }}>
-        <Link to="/new-plan">
-          <button
-            className="btn-primary"
-            style={{
-              padding: '12px 28px',
-              fontSize: '15px',
-              fontWeight: 700,
-              background: 'linear-gradient(90deg, #7C3AED 0%, #2563EB 100%)',
-              border: 'none',
-              borderRadius: '10px',
-              color: 'white',
-              cursor: 'pointer',
-              boxShadow: '0 2px 6px rgba(124, 58, 237, 0.3)'
-            }}
-          >
-            ✈️ Создать новый план
-          </button>
-        </Link>
-      </div>
-
       {/* Вкладки */}
       <nav className="profile-tabs">
         <button
@@ -123,7 +102,7 @@ function Dashboard() {
         </button>
       </nav>
 
-      {/* Список маршрутов */}
+      {/* Список маршрутов (показывается для вкладки "Мои маршруты") */}
       {activeTab === 'routes' && (
         <section className="routes-list">
           {user.routes.map(route => (
@@ -156,10 +135,11 @@ function Dashboard() {
         </section>
       )}
 
+      {/* Заглушки для других вкладок */}
       {activeTab === 'reviews' && <p className="empty-tab">Рецензии пока отсутствуют</p>}
       {activeTab === 'subscriptions' && <p className="empty-tab">Подписки пока отсутствуют</p>}
     </div>
   )
 }
 
-export default Dashboard
+export default ProfilePage

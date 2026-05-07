@@ -6,6 +6,8 @@ import RegisterPage from './pages/RegisterPage'
 import Dashboard from './pages/Dashboard'
 import PlanPage from './pages/PlanPage'
 import './styles.css'
+import './styles/figma.css';
+import ProfilePage from './pages/ProfilePage'
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <BrowserRouter>
@@ -16,6 +18,7 @@ ReactDOM.createRoot(document.getElementById('root')).render(
       <Route path="*" element={<Navigate to="/login" />} />
       <Route path="/plan/:planId" element={<PlanPage />} />
       <Route path="/new-plan" element={<PlanPage />} />
+      <Route path="/profile" element={<ProfilePage />} />
     </Routes>
   </BrowserRouter>
 )
